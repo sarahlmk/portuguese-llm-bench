@@ -1,6 +1,6 @@
 # portuguese-llm-bench
 
-Unified evaluation suite for Portuguese LLMs -- covering language understanding, reasoning, safety, and toxicity benchmarks.
+Unified evaluation suite for Portuguese LLMs -- covering language understanding, reasoning, safety, toxicity, and bias benchmarks.
 
 ## Benchmarks
 
@@ -11,6 +11,7 @@ Unified evaluation suite for Portuguese LLMs -- covering language understanding,
 | 3 | **Mathematical Reasoning** | [`mathematical_reasoning/`](mathematical_reasoning/) | GSM8K (1,319 problems), MATH-500 (500 problems) | Greedy decoding (single pass) via lm-eval-harness | exact_match, math_verify |
 | 4 | **Toxicity** | [`toxicity/`](toxicity/) | RealToxicityPrompts (100K prompts, 25 continuations each) | Nucleus sampling + ML toxicity scorer (Detoxify / OpenAI Moderation / Perspective API) | Expected Max Toxicity, Toxicity Probability |
 | 5 | **Safety Refusals** | [`safety_refusals/`](safety_refusals/) | Do-Not-Answer (939 harmful prompts, 5 risk areas) | LLM-as-judge classification (6 action categories) | Correct Refusal Rate, Harmful Response Rate |
+| 6 | **Sociocultural Bias** | [`sociocultural_bias/`](sociocultural_bias/) | StereoSet (intrasentence, ~2K items, 4 bias categories) | MCQ prompting with randomized options + before/after comparison | LMS, SS, ICAT |
 
 ## Results — functionary-pt-BR-v1.1
 
@@ -50,6 +51,7 @@ pip install -r logical_reasoning/requirements.txt
 pip install -r mathematical_reasoning/requirements.txt
 pip install -r toxicity/requirements.txt
 pip install -r safety_refusals/requirements.txt
+pip install -r sociocultural_bias/requirements.txt
 ```
 
 Benchmarks that use [lm-evaluation-harness](https://github.com/EleutherAI/lm-evaluation-harness) also require it to be installed:
@@ -90,6 +92,10 @@ python run_toxicity.py --base-url https://your-endpoint/v1 --model your-model-id
 # Safety Refusals (Do-Not-Answer)
 cd safety_refusals
 python run_refusals.py --base-url https://your-endpoint/v1 --model your-model-id
+
+# Sociocultural Bias (StereoSet)
+cd sociocultural_bias
+python run_stereoset.py --base-url https://your-endpoint/v1 --model your-model-id
 ```
 
 ## Repository Structure
@@ -123,9 +129,14 @@ portuguese-llm-bench/
 │   ├── README.md
 │   └── run_toxicity.py
 │
-└── safety_refusals/                # Do-Not-Answer
+├── safety_refusals/                # Do-Not-Answer
+│   ├── README.md
+│   └── run_refusals.py
+│
+└── sociocultural_bias/             # StereoSet (bias)
     ├── README.md
-    └── run_refusals.py
+    ├── run_stereoset.py
+    └── compare_stereoset.py
 ```
 
 ## Datasets
@@ -145,6 +156,7 @@ portuguese-llm-bench/
 | MATH-500 | [HuggingFaceH4/MATH-500](https://huggingface.co/datasets/HuggingFaceH4/MATH-500) | Mathematical Reasoning |
 | RealToxicityPrompts | [allenai/real-toxicity-prompts](https://huggingface.co/datasets/allenai/real-toxicity-prompts) | Toxicity |
 | Do-Not-Answer | [LibrAI/do-not-answer](https://huggingface.co/datasets/LibrAI/do-not-answer) | Safety Refusals |
+| StereoSet | [McGill-NLP/stereoset](https://huggingface.co/datasets/McGill-NLP/stereoset) | Sociocultural Bias |
 
 ## License
 
