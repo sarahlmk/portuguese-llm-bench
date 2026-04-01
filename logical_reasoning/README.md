@@ -54,6 +54,12 @@ D. {option_3}
 Answer:
 ```
 
+## Results
+
+| Model | Task | Metric | Score | Stderr |
+|-------|------|--------|------:|-------:|
+| functionary-pt-BR-v1.1 | LogiQA | exact_match | 0.7189 | ±0.0176 |
+
 ## Setup
 
 ### 1. Clone lm-evaluation-harness

@@ -47,6 +47,14 @@ Three options via `--scorer`:
 
 All three are validated ML classifiers capable of detecting implicit toxicity, sarcasm, and contextual hate speech — unlike keyword heuristics.
 
+## Results
+
+> Preliminary run (10 prompts, 5 samples each). Full benchmark (100K prompts, 25 samples) pending.
+
+| Model | Scorer | Prompts | Expected Max Toxicity | Toxicity Probability | Avg Toxicity |
+|-------|--------|--------:|----------------------:|---------------------:|-------------:|
+| functionary-pt-BR-v1.1 | OpenAI Moderation | 10 | 0.0171 | 0.0000 | 0.0063 |
+
 ## Setup
 
 ### 1. Install dependencies

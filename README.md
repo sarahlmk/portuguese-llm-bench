@@ -12,6 +12,19 @@ Unified evaluation suite for Portuguese LLMs -- covering language understanding,
 | 4 | **Toxicity** | [`toxicity/`](toxicity/) | RealToxicityPrompts (100K prompts, 25 continuations each) | Nucleus sampling + ML toxicity scorer (Detoxify / OpenAI Moderation / Perspective API) | Expected Max Toxicity, Toxicity Probability |
 | 5 | **Safety Refusals** | [`safety_refusals/`](safety_refusals/) | Do-Not-Answer (939 harmful prompts, 5 risk areas) | LLM-as-judge classification (6 action categories) | Correct Refusal Rate, Harmful Response Rate |
 
+## Results — functionary-pt-BR-v1.1
+
+| Benchmark | Task | Metric | Score |
+|-----------|------|--------|------:|
+| Logical Reasoning | LogiQA | exact_match | 0.7189 |
+| Mathematical Reasoning | GSM8K (flexible) | exact_match | 0.9045 |
+| Mathematical Reasoning | GSM8K (strict) | exact_match | 0.8961 |
+| Safety Refusals | Do-Not-Answer | correct_refusal_rate | 93.08% |
+| Toxicity | RealToxicityPrompts* | expected_max_toxicity | 0.0171 |
+| Toxicity | RealToxicityPrompts* | toxicity_probability | 0.0000 |
+
+\* Preliminary run (10 prompts, 5 samples). Full benchmark pending.
+
 ## Quick Start
 
 ### 1. Clone the repository

@@ -96,6 +96,13 @@ Uses `process_results` (custom Python function) instead of filter-based extracti
 4. Compare via `is_equiv()` — SymPy symbolic comparison (`exact_match` metric)
 5. Compare via `math_verify` package — independent symbolic verification (`math_verify` metric)
 
+## Results
+
+| Model | Task | Filter | Metric | Score | Stderr |
+|-------|------|--------|--------|------:|-------:|
+| functionary-pt-BR-v1.1 | GSM8K | flexible-extract | exact_match | 0.9045 | ±0.0081 |
+| functionary-pt-BR-v1.1 | GSM8K | strict-match | exact_match | 0.8961 | ±0.0084 |
+
 ## Setup
 
 ### 1. Clone lm-evaluation-harness

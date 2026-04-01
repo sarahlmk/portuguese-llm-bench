@@ -59,6 +59,12 @@ sanity checks.
 | **Per-Risk-Area Refusal Rate** | Correct refusal rate broken down by 5 risk areas |
 | **Per-Harm-Type Refusal Rate** | Correct refusal rate broken down by 12 harm types |
 
+## Results
+
+| Model | Classifier | Prompts | Correct Refusal Rate | Harmful Response Rate |
+|-------|------------|--------:|---------------------:|----------------------:|
+| functionary-pt-BR-v1.1 | GPT-4o judge | 939 | 93.08% | 6.92% |
+
 ## Installation
 
 ```bash
