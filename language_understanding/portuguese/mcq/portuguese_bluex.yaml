@@ -1,0 +1,7 @@
+task: portuguese_bluex
+task_alias: bluex
+dataset_path: eduagarcia-temp/BLUEX_without_images
+test_split: train
+include: _default_mcq_yaml
+doc_to_text: !function utils.enem_doc_to_text
+doc_to_target: "{{answerKey}}"

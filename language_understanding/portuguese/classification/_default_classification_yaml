@@ -1,0 +1,14 @@
+# Shared config for Portuguese classification tasks (generative).
+# Self-consistency: 64 samples per prompt, majority vote after regex extraction.
+output_type: generate_until
+repeats: 64
+generation_kwargs:
+  do_sample: true
+  temperature: 0.7
+process_results: !function utils.process_results
+metric_list:
+  - metric: f1_macro
+    aggregation: !function utils.macro_f1_agg
+    higher_is_better: true
+metadata:
+  version: 1.0

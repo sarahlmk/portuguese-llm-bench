@@ -1,0 +1,7 @@
+group: portuguese
+task:
+  - portuguese_mcq
+  - portuguese_classification
+  - portuguese_nli
+metadata:
+  version: 1.0

@@ -1,0 +1,5 @@
+group: logical_reasoning
+task:
+  - logiqa
+metadata:
+  version: 1.0

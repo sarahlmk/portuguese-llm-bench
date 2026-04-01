@@ -1,0 +1,11 @@
+group: portuguese_nli
+task:
+  - portuguese_assin2_rte
+  - portuguese_faquad_nli
+  - portuguese_assin2_sts
+aggregate_metric_list:
+  - metric: f1_macro
+    aggregation: mean
+    weight_by_size: true
+metadata:
+  version: 1.0

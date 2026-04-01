@@ -1,0 +1,18 @@
+task: portuguese_hatebr
+task_alias: hatebr_offensive
+dataset_path: eduagarcia/portuguese_benchmark
+dataset_name: HateBR_offensive_binary
+test_split: test
+include: _default_classification_yaml
+process_docs: !function utils.process_binary_docs
+doc_to_text: "Classifique se o texto a seguir é ofensivo ou não. Responda apenas com \"Sim\" ou \"Não\".\n\nTexto: {{sentence}}\nPergunta: O texto é ofensivo?\nResposta:"
+doc_to_target: "{{target}}"
+filter_list:
+  - name: "get_label"
+    filter:
+      - function: "strip_think_recover"
+      - function: "regex_last"
+        regex_pattern: "(Não|Sim)"
+        group_select: -1
+      - function: "majority_vote"
+      - function: "take_first"

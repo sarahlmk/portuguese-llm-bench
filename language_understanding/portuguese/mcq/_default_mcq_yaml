@@ -1,0 +1,22 @@
+# Shared config for Portuguese MCQ tasks (generative A/B/C/D/E).
+# Self-consistency: 64 samples per prompt, majority vote over extracted letters.
+output_type: generate_until
+repeats: 64
+generation_kwargs:
+  do_sample: true
+  temperature: 0.7
+filter_list:
+  - name: "get_answer"
+    filter:
+      - function: "strip_think_recover"
+      - function: "regex"
+        regex_pattern: "([ABCDE])"
+        group_select: 0
+      - function: "majority_vote"
+      - function: "take_first"
+metric_list:
+  - metric: exact_match
+    aggregation: mean
+    higher_is_better: true
+metadata:
+  version: 1.0

@@ -1,0 +1,17 @@
+task: portuguese_tweetsentbr
+task_alias: tweetsentbr
+dataset_path: eduagarcia/tweetsentbr_fewshot
+test_split: test
+include: _default_classification_yaml
+process_docs: !function utils.process_sentiment_docs
+doc_to_text: "Classifique o sentimento do texto a seguir. Responda apenas com \"Positivo\", \"Neutro\" ou \"Negativo\".\n\nTexto: {{sentence}}\nPergunta: O sentimento do texto é Positivo, Neutro ou Negativo?\nResposta:"
+doc_to_target: "{{target}}"
+filter_list:
+  - name: "get_label"
+    filter:
+      - function: "strip_think_recover"
+      - function: "regex_last"
+        regex_pattern: "(Negativo|Neutro|Positivo)"
+        group_select: -1
+      - function: "majority_vote"
+      - function: "take_first"

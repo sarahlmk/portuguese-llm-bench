@@ -1,0 +1,21 @@
+# Mathematical Reasoning Evaluation Config
+# Uses greedy decoding (single pass, no self-consistency sampling).
+
+[defaults]
+# API endpoint. Change to your inference server's chat completions URL.
+base_url = "http://100.99.39.103:30033/v1/chat/completions"
+
+# Parallel in-flight API requests (increase for faster eval, decrease if rate-limited).
+num_concurrent = 35
+
+num_fewshot = 0
+apply_chat_template = true
+log_samples = true
+output_path = "output/results"
+
+[[models]]
+name = "functionary-pt-BR-v1.1"
+model_id = "meetkai/functionary-pt-BR-v1.1"
+
+[[tasks]]
+name = "mathematical_reasoning"

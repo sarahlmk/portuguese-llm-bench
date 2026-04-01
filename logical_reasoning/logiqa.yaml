@@ -1,0 +1,29 @@
+task: logiqa
+task_alias: logiqa
+dataset_path: EleutherAI/logiqa
+dataset_name: logiqa
+dataset_kwargs:
+  trust_remote_code: true
+test_split: test
+output_type: generate_until
+repeats: 1
+generation_kwargs:
+  max_gen_toks: 8192
+  do_sample: false
+  temperature: 0.6
+filter_list:
+  - name: "get_answer"
+    filter:
+      - function: "strip_think_recover"
+      - function: "regex"
+        regex_pattern: "([ABCD])"
+        group_select: 0
+      - function: "take_first"
+metric_list:
+  - metric: exact_match
+    aggregation: mean
+    higher_is_better: true
+doc_to_text: !function utils.doc_to_text
+doc_to_target: !function utils.doc_to_target
+metadata:
+  version: 1.0

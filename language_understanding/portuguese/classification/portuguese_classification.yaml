@@ -1,0 +1,11 @@
+group: portuguese_classification
+task:
+  - portuguese_hatebr
+  - portuguese_hate_speech
+  - portuguese_tweetsentbr
+aggregate_metric_list:
+  - metric: f1_macro
+    aggregation: mean
+    weight_by_size: true
+metadata:
+  version: 1.0

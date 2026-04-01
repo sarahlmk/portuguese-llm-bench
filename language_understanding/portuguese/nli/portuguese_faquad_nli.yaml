@@ -1,0 +1,28 @@
+task: portuguese_faquad_nli
+task_alias: faquad_nli
+dataset_path: ruanchaves/faquad-nli
+test_split: test
+output_type: generate_until
+repeats: 64
+generation_kwargs:
+  do_sample: true
+  temperature: 0.7
+process_docs: !function utils.process_faquad_nli_docs
+doc_to_text: "Julgue se a resposta satisfaz à pergunta de maneira satisfatória. Responda apenas com \"Sim\" ou \"Não\".\n\nPergunta: {{question}}\nResposta: {{answer}}\nA resposta dada satisfaz à pergunta? Sim ou Não?"
+doc_to_target: "{{target}}"
+filter_list:
+  - name: "get_label"
+    filter:
+      - function: "strip_think_recover"
+      - function: "regex"
+        regex_pattern: "(Sim|Não)"
+        group_select: 0
+      - function: "majority_vote"
+      - function: "take_first"
+process_results: !function utils.process_nli_results
+metric_list:
+  - metric: f1_macro
+    aggregation: !function utils.macro_f1_agg
+    higher_is_better: true
+metadata:
+  version: 1.0

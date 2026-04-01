@@ -1,0 +1,40 @@
+task: gsm8k_zeroshot
+task_alias: gsm8k_zeroshot
+dataset_path: openai/gsm8k
+dataset_name: main
+test_split: test
+output_type: generate_until
+repeats: 1
+generation_kwargs:
+  max_gen_toks: 8192
+  do_sample: false
+  temperature: 0
+filter_list:
+  - name: "strict-match"
+    filter:
+      - function: "strip_think_recover"
+      - function: "regex"
+        regex_pattern: "#### (\\-?[0-9\\.\\,]+)"
+        group_select: 0
+      - function: "take_first"
+  - name: "flexible-extract"
+    filter:
+      - function: "strip_think_recover"
+      - function: "regex_last"
+        regex_pattern: "(-?[$0-9.,]{2,})|(-?[0-9]+)"
+        group_select: -1
+      - function: "take_first"
+metric_list:
+  - metric: exact_match
+    aggregation: mean
+    higher_is_better: true
+    ignore_case: true
+    ignore_punctuation: false
+    regexes_to_ignore:
+      - ","
+      - "\\$"
+      - "\\.$"
+doc_to_text: !function gsm8k_utils.doc_to_text
+doc_to_target: !function gsm8k_utils.doc_to_target
+metadata:
+  version: 1.0

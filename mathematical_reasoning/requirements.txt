@@ -1,0 +1,5 @@
+lm-eval>=0.4.0
+tomli; python_version < "3.11"
+sympy
+math-verify
+antlr4-python3-runtime==4.11.1

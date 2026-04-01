@@ -1,0 +1,11 @@
+group: portuguese_mcq
+task:
+  - portuguese_enem
+  - portuguese_bluex
+  - portuguese_oab_exams
+aggregate_metric_list:
+  - metric: exact_match
+    aggregation: mean
+    weight_by_size: true
+metadata:
+  version: 1.0

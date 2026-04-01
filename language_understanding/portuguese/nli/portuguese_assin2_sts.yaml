@@ -1,0 +1,26 @@
+task: portuguese_assin2_sts
+task_alias: assin2_sts
+dataset_path: assin2
+test_split: test
+output_type: generate_until
+repeats: 1
+generation_kwargs:
+  do_sample: false
+  temperature: 0
+doc_to_text: "Avalie o grau de similaridade entre as duas frases abaixo. Dê uma pontuação entre 1,0 e 5,0 (1,0 = pouco similar, 5,0 = muito similar).\n\nFrase 1: {{premise}}\nFrase 2: {{hypothesis}}\nPergunta: Quão similares são as duas frases? Dê uma pontuação entre 1,0 a 5,0.\nResposta:"
+doc_to_target: !function utils.assin2_float_to_pt_str
+filter_list:
+  - name: "extract_score"
+    filter:
+      - function: "sts_score_extract"
+      - function: "take_first"
+process_results: !function utils.process_sts_results
+metric_list:
+  - metric: pearson
+    aggregation: !function utils.pearson_agg
+    higher_is_better: true
+  - metric: mse
+    aggregation: !function utils.mse_agg
+    higher_is_better: false
+metadata:
+  version: 1.0

@@ -1,0 +1,44 @@
+# ─────────────────────────────────────────────────────────────────────
+# Portuguese Evaluation Config
+# ─────────────────────────────────────────────────────────────────────
+# Usage:
+#   python run_eval.py                        # run all models x all tasks
+#   python run_eval.py --models my-model      # run one model only
+#   python run_eval.py --dry-run              # print params without running
+#   python run_eval.py --save-all-samples     # keep all 64 responses in JSONL
+#
+# Prerequisites:
+#   1. pip install lm-eval
+#   2. export OPENAI_API_KEY="your-api-key"
+#      (or OPENROUTER_API_KEY if using OpenRouter)
+
+[defaults]
+# API endpoint. Change to your inference server's chat completions URL.
+base_url = "http://100.99.39.103:30033/v1/chat/completions"
+
+# Parallel in-flight API requests (increase for faster eval, decrease if rate-limited).
+num_concurrent = 35
+
+num_fewshot = 0
+apply_chat_template = true
+log_samples = true
+output_path = "output/results"
+
+# ── Models ───────────────────────────────────────────────────────────
+# Add your models here. Each needs:
+#   name     = display name (used in output directory)
+#   model_id = provider model ID (as sent to the API)
+#
+# Optional per-model generation overrides:
+#   gen_kwargs = "max_gen_toks=8192,temperature=0.6,top_p=0.95"
+
+[[models]]
+name = "functionary-pt-BR-v1.1"
+model_id = "meetkai/functionary-pt-BR-v1.1"
+# gen_kwargs = "max_gen_toks=8192"
+
+# ── Tasks ────────────────────────────────────────────────────────────
+# Run the full Portuguese benchmark (9 tasks across MCQ, classification, NLI).
+
+[[tasks]]
+name = "portuguese"

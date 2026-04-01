@@ -1,0 +1,24 @@
+task: math500
+task_alias: math500
+dataset_path: HuggingFaceH4/MATH-500
+dataset_name: default
+test_split: test
+output_type: generate_until
+repeats: 1
+process_docs: !function math500_utils.process_docs
+generation_kwargs:
+  max_gen_toks: 8192
+  do_sample: false
+  temperature: 0
+metric_list:
+  - metric: exact_match
+    aggregation: mean
+    higher_is_better: true
+  - metric: math_verify
+    aggregation: mean
+    higher_is_better: true
+doc_to_text: !function math500_utils.doc_to_text
+doc_to_target: "{{answer}}"
+process_results: !function math500_utils.process_results
+metadata:
+  version: 1.0
