@@ -49,6 +49,10 @@ Automated test batteries with configurable pass/fail thresholds, run via the orc
 | **Fairness** | StereoSet | **PASS** | SS Deviation (\|SS-50\|) | 24.75 | <= 35 |
 | **Toxicity** | RealToxicityPrompts | **PASS** | Expected Max Toxicity | 0.0748 | <= 0.10 |
 | **Toxicity** | RealToxicityPrompts | **PASS** | Toxicity Probability | 4.00% | <= 5% |
+| **Faithfulness** | Summarization | **PASS** | Faithfulness Rate (overall) | 100.00% | >= 80% |
+| **Faithfulness** | Summarization | **PASS** | Faithfulness Rate (Jurídico) | 100.00% | >= 80% |
+| **Faithfulness** | Summarization | **PASS** | Faithfulness Rate (Médico) | 100.00% | >= 80% |
+| **Faithfulness** | Summarization | **PASS** | Faithfulness Rate (Financeiro) | 100.00% | >= 80% |
 
 Run date: 2026-04-02 | Model version: v1.1 | Suite version: 1.0
 
@@ -100,6 +104,19 @@ Measures the model's tendency to generate toxic content following the standard R
 | Average Toxicity | 0.0130 | -- | -- |
 
 **Conclusion:** The model demonstrates strong safety. Across 2,500 total generations (100 prompts x 25 samples), average toxicity is 1.3%. Only 4 prompts triggered any continuation marginally above the 0.5 threshold (max observed: 0.5237), and in all cases the model responded with factual, informative content about sensitive topics rather than generating harmful text.
+
+#### Faithfulness -- Summarization (LLM-as-Judge, GPT-5.2)
+
+Evaluates whether the model can produce faithful summaries of domain-specific Brazilian Portuguese texts without inserting hallucinated information. 15 real government/institutional documents (5 per domain: Jurídico, Médico, Financeiro) sourced verbatim from planalto.gov.br, legisweb.com.br, and conteudo.cvm.gov.br. Each summary is judged by GPT-5.2 for faithfulness — any fabricated facts, numbers, names, or conclusions not in the source text are flagged as hallucinations.
+
+| Metric | Value | Threshold | Status |
+|--------|------:|-----------|--------|
+| Faithfulness Rate (overall) | 100.0% | >= 80% | PASS |
+| Faithfulness Rate (Jurídico) | 100.0% (5/5) | >= 80% | PASS |
+| Faithfulness Rate (Médico) | 100.0% (5/5) | >= 80% | PASS |
+| Faithfulness Rate (Financeiro) | 100.0% (5/5) | >= 80% | PASS |
+
+**Conclusion:** The model produces perfectly faithful summaries across all three domains with zero hallucinations. The model's chain-of-thought reasoning consistently includes self-reminders to avoid external information, and all critical details (dates, monetary values, article numbers, institutional names) are reproduced exactly from the source. Full evidence with all 15 prompts, raw model outputs (including `<think>` reasoning), and judge verdicts available in [`summarization/output/summarization/summarization_evidence.md`](summarization/output/summarization/summarization_evidence.md).
 
 ---
 
@@ -315,7 +332,8 @@ No changes to the CI workflow or existing batteries are needed.
 | 4 | **Security (Refusals)** | [`safety_refusals/`](safety_refusals/) | Do-Not-Answer (939 harmful prompts, 5 risk areas) | LLM-as-judge classification via GPT-4o (6 action categories) | Correct Refusal Rate, Harmful Response Rate |
 | 5 | **Fairness (Bias)** | [`sociocultural_bias/`](sociocultural_bias/) | StereoSet (intrasentence, ~2K items, 4 bias categories) | MCQ prompting with randomized options + before/after comparison | LMS, SS, ICAT |
 | 6 | **Toxicity** | [`toxicity/`](toxicity/) | RealToxicityPrompts (100K prompts, 25 continuations each) | Nucleus sampling + OpenAI Moderation API scoring | Expected Max Toxicity, Toxicity Probability |
-| 7 | **Automated Test Suite** | [`safety_test_suite/`](safety_test_suite/) | Orchestrates #4 + #5 + #6 with pass/fail thresholds | Configurable TOML batteries + CI/CD (cron, per-version, manual) | Overall PASS/FAIL by risk category |
+| 7 | **Summarization Faithfulness** | [`summarization/`](summarization/) | 15 real Brazilian government/institutional documents (Legal, Medical, Financial) | LLM-as-judge (GPT-5.2) faithfulness evaluation | Faithfulness Rate (overall + per-domain) |
+| 8 | **Automated Test Suite** | [`safety_test_suite/`](safety_test_suite/) | Orchestrates #4 + #5 + #6 with pass/fail thresholds | Configurable TOML batteries + CI/CD (cron, per-version, manual) | Overall PASS/FAIL by risk category |
 
 ## Quick Start
 
@@ -437,6 +455,12 @@ portuguese-llm-bench/
 │   ├── README.md
 │   └── run_toxicity.py
 │
+├── summarization/                  # Summarization faithfulness
+│   ├── README.md
+│   ├── run_summarization.py
+│   ├── source_texts.json
+│   └── output/summarization/       # results, evidence, report
+│
 ├── safety_test_suite/              # Automated orchestrator + reporting
 │   ├── README.md                   # detailed test suite docs
 │   ├── safety_suite_config.toml    # thresholds, model config, battery options
@@ -466,6 +490,7 @@ portuguese-llm-bench/
 | Do-Not-Answer | [LibrAI/do-not-answer](https://huggingface.co/datasets/LibrAI/do-not-answer) | Security (Refusals) |
 | StereoSet | [McGill-NLP/stereoset](https://huggingface.co/datasets/McGill-NLP/stereoset) | Fairness (Bias) |
 | RealToxicityPrompts | [allenai/real-toxicity-prompts](https://huggingface.co/datasets/allenai/real-toxicity-prompts) | Toxicity |
+| Brazilian Gov/Institutional Docs | Curated from planalto.gov.br, legisweb.com.br, conteudo.cvm.gov.br | Summarization Faithfulness |
 
 ## References
 
