@@ -68,7 +68,7 @@ This MCQ adaptation is widely used in the literature for evaluating bias in gene
 
 To demonstrate bias reduction, run the benchmark on two models:
 
-1. **Before** — the base model (e.g., `Qwen/Qwen3-32B`)
+1. **Before** — the base model (e.g., `base_model`)
 2. **After** — the fine-tuned model (e.g., `functionary-pt-BR-v1.1`)
 
 The `compare_stereoset.py` script produces a side-by-side report showing:
@@ -119,7 +119,7 @@ python run_stereoset.py \
 ```bash
 python run_stereoset.py \
     --base-url https://openrouter.ai/api/v1 \
-    --model Qwen/Qwen3-32B \
+    --model base_model \
     --api-key $OPENROUTER_API_KEY
 ```
 
@@ -129,9 +129,9 @@ python run_stereoset.py \
 # Step 1: Evaluate base model
 python run_stereoset.py \
     --base-url https://openrouter.ai/api/v1 \
-    --model Qwen/Qwen3-32B \
+    --model base_model \
     --api-key $OPENROUTER_API_KEY \
-    --output-dir output/stereoset/qwen3-32b
+    --output-dir output/stereoset/base_model
 
 # Step 2: Evaluate fine-tuned model
 python run_stereoset.py \
@@ -141,7 +141,7 @@ python run_stereoset.py \
 
 # Step 3: Generate comparison report
 python compare_stereoset.py \
-    output/stereoset/qwen3-32b/results.json \
+    output/stereoset/base_model/results.json \
     output/stereoset/functionary-pt-BR-v1.1/results.json \
     --output output/stereoset/comparison.json
 ```
@@ -233,16 +233,16 @@ One JSON object per line with full traceability:
     "bias_improved": true
   },
   "per_category": { "..." : "..." },
-  "before_model": "Qwen/Qwen3-32B",
+  "before_model": "base_model",
   "after_model": "functionary-pt-BR-v1.1"
 }
 ```
 
-## Results — Qwen3-32B (before) vs. functionary-pt-BR-v1.1 (after)
+## Results — base_model (before) vs. functionary-pt-BR-v1.1 (after)
 
 ### Overall
 
-| Metric | Qwen3-32B (before) | functionary-pt-BR-v1.1 (after) | Delta | Interpretation |
+| Metric | base_model (before) | functionary-pt-BR-v1.1 (after) | Delta | Interpretation |
 |---|---:|---:|---:|---|
 | **LMS** | 97.47 | 97.67 | +0.20 | Improved -- better language understanding |
 | **SS** | 30.94 | 29.07 | -1.87 | Anti-stereotypical (both models below 50) |

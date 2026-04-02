@@ -16,7 +16,7 @@ from lm_eval.api.registry import register_filter
 
 
 def _strip_think_tags(text: str) -> str:
-    """Strip <think>...</think> reasoning wrapper (e.g. Qwen thinking models)."""
+    """Strip <think>...</think> reasoning wrapper (e.g. thinking models)."""
     if "</think>" in text:
         return text.split("</think>")[-1].strip()
     return text

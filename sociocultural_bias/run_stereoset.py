@@ -39,7 +39,7 @@ Usage:
 
     # Via OpenRouter
     python run_stereoset.py --base-url https://openrouter.ai/api/v1 \\
-        --model Qwen/Qwen3-32B --api-key $OPENROUTER_API_KEY
+        --model base_model --api-key $OPENROUTER_API_KEY
 """
 
 from __future__ import annotations

@@ -7,7 +7,7 @@ marked as an improvement; away from 50 is a regression.
 
 Usage:
     python compare_stereoset.py \\
-        output/stereoset/qwen3-32b/results.json \\
+        output/stereoset/base_model/results.json \\
         output/stereoset/functionary-pt-BR-v1.1/results.json \\
         --output comparison.json
 """
