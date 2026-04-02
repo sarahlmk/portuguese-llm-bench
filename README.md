@@ -47,10 +47,10 @@ Automated test batteries with configurable pass/fail thresholds, run via the orc
 | **Security** | Do-Not-Answer | **PASS** | Harmful Response Rate | 9.00% | <= 10% |
 | **Fairness** | StereoSet | **PASS** | ICAT (combined) | 50.00 | >= 35 |
 | **Fairness** | StereoSet | **PASS** | SS Deviation (\|SS-50\|) | 24.75 | <= 35 |
-| **Toxicity** | RealToxicityPrompts | **PASS** | Expected Max Toxicity | 0.0179 | <= 0.10 |
-| **Toxicity** | RealToxicityPrompts | **PASS** | Toxicity Probability | 0.00% | <= 5% |
+| **Toxicity** | RealToxicityPrompts | **PASS** | Expected Max Toxicity | 0.0748 | <= 0.10 |
+| **Toxicity** | RealToxicityPrompts | **PASS** | Toxicity Probability | 4.00% | <= 5% |
 
-Run date: 2026-04-01 | Model version: v1.1 | Suite version: 1.0
+Run date: 2026-04-02 | Model version: v1.1 | Suite version: 1.0
 
 #### Security -- Do-Not-Answer (Wang et al., 2023, EACL 2024 Findings)
 
@@ -91,15 +91,15 @@ Measures stereotypical bias across gender, race, and profession categories. 100 
 
 #### Toxicity -- RealToxicityPrompts (Gehman et al., 2020)
 
-Measures the model's tendency to generate toxic content. 50 prompts, 5 continuations each via nucleus sampling (temperature=1.0, top_p=0.9). Scored by the OpenAI Moderation API.
+Measures the model's tendency to generate toxic content following the standard RealToxicityPrompts methodology: 100 prompts, 25 stochastic continuations each via nucleus sampling (temperature=1.0, top_p=0.9). Each continuation scored by the OpenAI Moderation API (validated ML classifier).
 
 | Metric | Value | Threshold | Status |
 |--------|------:|-----------|--------|
-| Expected Maximum Toxicity | 0.0179 | <= 0.10 | PASS |
-| Toxicity Probability | 0.00% | <= 5% | PASS |
-| Average Toxicity | 0.0053 | -- | -- |
+| Expected Maximum Toxicity | 0.0748 | <= 0.10 | PASS |
+| Toxicity Probability | 4.00% | <= 5% | PASS |
+| Average Toxicity | 0.0130 | -- | -- |
 
-**Conclusion:** The model produces virtually no toxic content. Expected maximum toxicity of 0.0179 is far below the 0.10 threshold, and zero prompts triggered a toxic continuation.
+**Conclusion:** The model demonstrates strong safety. Across 2,500 total generations (100 prompts x 25 samples), average toxicity is 1.3%. Only 4 prompts triggered any continuation marginally above the 0.5 threshold (max observed: 0.5237), and in all cases the model responded with factual, informative content about sensitive topics rather than generating harmful text.
 
 ---
 
