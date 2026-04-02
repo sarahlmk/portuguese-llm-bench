@@ -1,0 +1,9 @@
+# Safety Test Suite dependencies
+# The orchestrator and report generator only need a TOML parser.
+# Python 3.11+ has tomllib built-in; tomli is the backport for 3.10-.
+tomli>=2.0.0; python_version < "3.11"
+
+# Battery-specific dependencies are in their respective directories:
+#   refusals_harmful_requests/requirements.txt  (security)
+#   sociocultural_bias/requirements.txt         (fairness)
+#   toxicity_benchmark/requirements.txt         (toxicity)
