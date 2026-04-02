@@ -1,0 +1,139 @@
+name: Safety / Fairness / Toxicity Test Suite
+
+on:
+  # Periodic: every Monday at 06:00 UTC
+  schedule:
+    - cron: "0 6 * * 1"
+
+  # Per-version: triggered on version tags
+  push:
+    tags:
+      - "v*"
+    paths:
+      - "safety_test_suite/safety_suite_config.toml"
+
+  # Manual dispatch with configurable inputs
+  workflow_dispatch:
+    inputs:
+      model_name:
+        description: "Model display name (e.g. functionary-pt-BR-v1.1)"
+        required: false
+        type: string
+      model_id:
+        description: "Model ID sent to the API"
+        required: false
+        type: string
+      base_url:
+        description: "OpenAI-compatible API base URL"
+        required: false
+        type: string
+      model_version:
+        description: "Version tag for this evaluation run"
+        required: false
+        type: string
+      smoke_test:
+        description: "Run in smoke-test mode (reduced samples for fast validation)"
+        required: false
+        type: boolean
+        default: true
+      batteries:
+        description: "Comma-separated batteries to run (default: all)"
+        required: false
+        type: string
+        default: "security,fairness,toxicity"
+
+env:
+  PYTHON_VERSION: "3.11"
+
+jobs:
+  run-safety-suite:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r safety_test_suite/requirements.txt
+          pip install -r refusals_harmful_requests/requirements.txt || true
+          pip install -r sociocultural_bias/requirements.txt || true
+          pip install -r toxicity_benchmark/requirements.txt || true
+
+      - name: Determine run parameters
+        id: params
+        run: |
+          # Use workflow_dispatch inputs if available, otherwise config defaults
+          if [ -n "${{ inputs.model_version }}" ]; then
+            echo "model_version=--model-version ${{ inputs.model_version }}" >> $GITHUB_OUTPUT
+          elif [ -n "${{ github.ref_name }}" ] && [[ "${{ github.ref_name }}" == v* ]]; then
+            echo "model_version=--model-version ${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          else
+            echo "model_version=" >> $GITHUB_OUTPUT
+          fi
+
+          if [ "${{ inputs.smoke_test }}" = "true" ] || [ "${{ github.event_name }}" = "schedule" ]; then
+            echo "smoke_flag=--smoke-test" >> $GITHUB_OUTPUT
+          else
+            echo "smoke_flag=" >> $GITHUB_OUTPUT
+          fi
+
+          if [ -n "${{ inputs.batteries }}" ]; then
+            BATTERIES=$(echo "${{ inputs.batteries }}" | tr ',' ' ')
+            echo "batteries=--batteries ${BATTERIES}" >> $GITHUB_OUTPUT
+          else
+            echo "batteries=" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run safety test suite
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          python safety_test_suite/run_safety_suite.py \
+            --config safety_test_suite/safety_suite_config.toml \
+            ${{ steps.params.outputs.smoke_flag }} \
+            ${{ steps.params.outputs.model_version }} \
+            ${{ steps.params.outputs.batteries }}
+
+      - name: Upload consolidated report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: safety-suite-report-${{ github.run_id }}
+          path: |
+            safety_test_suite/output/**/consolidated_report.json
+            safety_test_suite/output/**/summary.md
+            safety_test_suite/output/**/run_manifest.json
+          retention-days: 90
+
+      - name: Upload detailed results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: safety-suite-details-${{ github.run_id }}
+          path: |
+            safety_test_suite/output/**/results.json
+            safety_test_suite/output/**/samples.jsonl
+          retention-days: 30
+
+      - name: Print summary
+        if: always()
+        run: |
+          SUMMARY_FILE=$(find safety_test_suite/output -name "summary.md" -type f | head -1)
+          if [ -f "$SUMMARY_FILE" ]; then
+            cat "$SUMMARY_FILE"
+            echo ""
+            echo "---"
+            echo "Full report artifact: safety-suite-report-${{ github.run_id }}"
+          else
+            echo "No summary report generated."
+            exit 1
+          fi
