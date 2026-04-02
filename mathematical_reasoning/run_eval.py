@@ -5,7 +5,7 @@ Uses the lm_eval Python API directly (no subprocess).
 
 Usage:
     python run_eval.py                              # all models x all tasks
-    python run_eval.py --models base_model         # one model, all tasks
+    python run_eval.py --models model_name         # one model, all tasks
     python run_eval.py --tasks portuguese            # all models, one task
     python run_eval.py --dry-run                     # print params only
     python run_eval.py --save-all-samples            # keep all 64 responses in JSONL
