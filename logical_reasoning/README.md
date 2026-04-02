@@ -89,11 +89,11 @@ Edit `eval_config.toml`:
 
 ```toml
 [[models]]
-name = "your-model-name"          # display name (used in output dirs)
+name = "meetkai/functionary-pt-BR-v1.1"          # display name (used in output dirs)
 model_id = "provider/model-id"    # model ID sent to the API
 
 [defaults]
-base_url = "https://your-endpoint/v1/chat/completions"
+base_url = "https://functionary-inference-pt-br.meetkai.ai/v1/chat/completions"
 ```
 
 ## Running
@@ -107,7 +107,7 @@ python run_eval.py
 ### Specific model
 
 ```bash
-python run_eval.py --models your-model-name
+python run_eval.py --models meetkai/functionary-pt-BR-v1.1
 ```
 
 ### Dry run (print parameters only)
@@ -134,7 +134,7 @@ python run_eval.py --limit 20
 Results are saved to `output/results/{model_name}/logical_reasoning/`:
 
 ```
-output/results/your-model/logical_reasoning/
+output/results/meetkai/functionary-pt-BR-v1.1/logical_reasoning/
   results.json
   samples_logiqa_2026-04-01_120000.jsonl
 ```

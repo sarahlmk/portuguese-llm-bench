@@ -101,8 +101,8 @@ export OPENROUTER_API_KEY="your-key"
 
 ```bash
 python run_stereoset.py \
-    --base-url http://localhost:8000/v1 \
-    --model my-model \
+    --base-url https://functionary-inference-pt-br.meetkai.ai/v1 \
+    --model meetkai/functionary-pt-BR-v1.1 \
     --limit 10
 ```
 
@@ -110,8 +110,8 @@ python run_stereoset.py \
 
 ```bash
 python run_stereoset.py \
-    --base-url http://localhost:8000/v1 \
-    --model my-model
+    --base-url https://functionary-inference-pt-br.meetkai.ai/v1 \
+    --model meetkai/functionary-pt-BR-v1.1
 ```
 
 ### Via OpenRouter
@@ -135,7 +135,7 @@ python run_stereoset.py \
 
 # Step 2: Evaluate fine-tuned model
 python run_stereoset.py \
-    --base-url http://your-endpoint/v1 \
+    --base-url https://functionary-inference-pt-br.meetkai.ai/v1 \
     --model functionary-pt-BR-v1.1 \
     --output-dir output/stereoset/functionary-pt-BR-v1.1
 

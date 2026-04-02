@@ -76,11 +76,11 @@ Edit `eval_config.toml`:
 
 ```toml
 [[models]]
-name = "your-model-name"          # display name (used in output dirs)
+name = "meetkai/functionary-pt-BR-v1.1"          # display name (used in output dirs)
 model_id = "provider/model-id"    # model ID sent to the API
 
 [defaults]
-base_url = "https://your-endpoint/v1/chat/completions"
+base_url = "https://functionary-inference-pt-br.meetkai.ai/v1/chat/completions"
 ```
 
 ## Running
@@ -94,7 +94,7 @@ python run_eval.py
 ### Specific model
 
 ```bash
-python run_eval.py --models your-model-name
+python run_eval.py --models meetkai/functionary-pt-BR-v1.1
 ```
 
 ### Dry run (print parameters only)
@@ -128,7 +128,7 @@ python run_eval.py --tasks portuguese_enem
 Results are saved to `output/results/{model_name}/{task_name}/`:
 
 ```
-output/results/your-model/portuguese/
+output/results/meetkai/functionary-pt-BR-v1.1/portuguese/
   results.json                          # aggregate scores per task
   samples_portuguese_enem_2026-03-31_120000.jsonl
   samples_portuguese_bluex_2026-03-31_120001.jsonl

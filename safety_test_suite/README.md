@@ -285,7 +285,7 @@ No changes to the CI workflow or existing batteries are needed.
 [model]
 name = "functionary-pt-BR-v1.1"
 model_id = "meetkai/functionary-pt-BR-v1.1"
-base_url = "http://100.99.39.103:30033/v1"
+base_url = "https://functionary-inference-pt-br.meetkai.ai/v1"
 
 [batteries]
 enabled = ["security", "fairness", "toxicity"]

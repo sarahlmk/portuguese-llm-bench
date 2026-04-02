@@ -28,12 +28,12 @@ Directly addresses Serpro's feedback on hallucinations in generated summaries (e
 
 ```bash
 # Quick test (3 texts)
-python run_summarization.py --base-url http://localhost:8000/v1 \
-    --model my-model --limit 3
+python run_summarization.py --base-url https://functionary-inference-pt-br.meetkai.ai/v1 \
+    --model meetkai/functionary-pt-BR-v1.1 --limit 3
 
 # Full benchmark with LLM judge
-python run_summarization.py --base-url http://localhost:8000/v1 \
-    --model my-model \
+python run_summarization.py --base-url https://functionary-inference-pt-br.meetkai.ai/v1 \
+    --model meetkai/functionary-pt-BR-v1.1 \
     --judge-base-url https://api.openai.com/v1 \
     --judge-api-key $OPENAI_API_KEY
 
@@ -43,8 +43,8 @@ python run_summarization.py --base-url https://openrouter.ai/api/v1 \
     --judge-model openai/gpt-5.2
 
 # Higher concurrency
-python run_summarization.py --base-url http://localhost:8000/v1 \
-    --model my-model --num-concurrent 4
+python run_summarization.py --base-url https://functionary-inference-pt-br.meetkai.ai/v1 \
+    --model meetkai/functionary-pt-BR-v1.1 --num-concurrent 4
 ```
 
 ## CLI Arguments

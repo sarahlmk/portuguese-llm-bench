@@ -24,12 +24,12 @@ Classifiers (--classifier):
 
 Usage:
     # Quick test (10 prompts, keyword classifier)
-    python run_refusals.py --base-url http://localhost:8000/v1 \\
-        --model my-model --limit 10 --classifier keyword
+    python run_refusals.py --base-url https://functionary-inference-pt-br.meetkai.ai/v1 \\
+        --model meetkai/functionary-pt-BR-v1.1 --limit 10 --classifier keyword
 
     # Full benchmark with LLM judge
-    python run_refusals.py --base-url http://localhost:8000/v1 \\
-        --model my-model \\
+    python run_refusals.py --base-url https://functionary-inference-pt-br.meetkai.ai/v1 \\
+        --model meetkai/functionary-pt-BR-v1.1 \\
         --classifier gpt4 --classifier-base-url https://api.openai.com/v1 \\
         --classifier-api-key $OPENAI_API_KEY
 

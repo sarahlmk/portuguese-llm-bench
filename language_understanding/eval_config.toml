@@ -3,7 +3,7 @@
 # ─────────────────────────────────────────────────────────────────────
 # Usage:
 #   python run_eval.py                        # run all models x all tasks
-#   python run_eval.py --models my-model      # run one model only
+#   python run_eval.py --models meetkai/functionary-pt-BR-v1.1      # run one model only
 #   python run_eval.py --dry-run              # print params without running
 #   python run_eval.py --save-all-samples     # keep all 64 responses in JSONL
 #
@@ -14,7 +14,7 @@
 
 [defaults]
 # API endpoint. Change to your inference server's chat completions URL.
-base_url = "http://100.99.39.103:30033/v1/chat/completions"
+base_url = "https://functionary-inference-pt-br.meetkai.ai/v1/chat/completions"
 
 # Parallel in-flight API requests (increase for faster eval, decrease if rate-limited).
 num_concurrent = 35

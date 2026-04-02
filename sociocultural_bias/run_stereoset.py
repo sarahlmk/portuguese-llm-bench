@@ -30,12 +30,12 @@ option order (mitigates position bias).
 
 Usage:
     # Quick test (10 items)
-    python run_stereoset.py --base-url http://localhost:8000/v1 \\
-        --model my-model --limit 10
+    python run_stereoset.py --base-url https://functionary-inference-pt-br.meetkai.ai/v1 \\
+        --model meetkai/functionary-pt-BR-v1.1 --limit 10
 
     # Full benchmark
-    python run_stereoset.py --base-url http://localhost:8000/v1 \\
-        --model my-model
+    python run_stereoset.py --base-url https://functionary-inference-pt-br.meetkai.ai/v1 \\
+        --model meetkai/functionary-pt-BR-v1.1
 
     # Via OpenRouter
     python run_stereoset.py --base-url https://openrouter.ai/api/v1 \\

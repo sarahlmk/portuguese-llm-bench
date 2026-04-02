@@ -138,11 +138,11 @@ Edit `eval_config.toml`:
 
 ```toml
 [[models]]
-name = "your-model-name"          # display name (used in output dirs)
+name = "meetkai/functionary-pt-BR-v1.1"          # display name (used in output dirs)
 model_id = "provider/model-id"    # model ID sent to the API
 
 [defaults]
-base_url = "https://your-endpoint/v1/chat/completions"
+base_url = "https://functionary-inference-pt-br.meetkai.ai/v1/chat/completions"
 ```
 
 ## Running
@@ -163,7 +163,7 @@ python run_eval.py --tasks math500
 ### Specific model
 
 ```bash
-python run_eval.py --models your-model-name
+python run_eval.py --models meetkai/functionary-pt-BR-v1.1
 ```
 
 ### Dry run (print parameters only)
@@ -190,11 +190,11 @@ python run_eval.py --limit 20
 Results are saved to `output/results/{model_name}/{task_name}/`:
 
 ```
-output/results/your-model/gsm8k_zeroshot/
+output/results/meetkai/functionary-pt-BR-v1.1/gsm8k_zeroshot/
   results.json
   samples_gsm8k_zeroshot_2026-04-01_120000.jsonl
 
-output/results/your-model/math500/
+output/results/meetkai/functionary-pt-BR-v1.1/math500/
   results.json
   samples_math500_2026-04-01_120000.jsonl
 ```

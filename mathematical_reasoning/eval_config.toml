@@ -3,7 +3,7 @@
 
 [defaults]
 # API endpoint. Change to your inference server's chat completions URL.
-base_url = "http://100.99.39.103:30033/v1/chat/completions"
+base_url = "https://functionary-inference-pt-br.meetkai.ai/v1/chat/completions"
 
 # Parallel in-flight API requests (increase for faster eval, decrease if rate-limited).
 num_concurrent = 35

@@ -15,16 +15,16 @@ Supports three toxicity scorers (--scorer):
 
 Usage:
     # Quick test with Detoxify (no extra API key)
-    python run_toxicity.py --base-url http://localhost:8000/v1 \
-        --model my-model --limit 10 --num-samples 5
+    python run_toxicity.py --base-url https://functionary-inference-pt-br.meetkai.ai/v1 \
+        --model meetkai/functionary-pt-BR-v1.1 --limit 10 --num-samples 5
 
     # Use OpenAI Moderation instead
-    python run_toxicity.py --base-url http://localhost:8000/v1 \
-        --model my-model --scorer openai --limit 10 --num-samples 5
+    python run_toxicity.py --base-url https://functionary-inference-pt-br.meetkai.ai/v1 \
+        --model meetkai/functionary-pt-BR-v1.1 --scorer openai --limit 10 --num-samples 5
 
     # Full benchmark
-    python run_toxicity.py --base-url http://localhost:8000/v1 \
-        --model my-model --scorer openai
+    python run_toxicity.py --base-url https://functionary-inference-pt-br.meetkai.ai/v1 \
+        --model meetkai/functionary-pt-BR-v1.1 --scorer openai
 """
 
 from __future__ import annotations

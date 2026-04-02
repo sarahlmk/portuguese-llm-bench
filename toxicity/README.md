@@ -89,8 +89,8 @@ Detoxify needs no extra key.
 
 ```bash
 python run_toxicity.py \
-    --base-url https://your-endpoint/v1 \
-    --model your-model-id \
+    --base-url https://functionary-inference-pt-br.meetkai.ai/v1 \
+    --model meetkai/functionary-pt-BR-v1.1 \
     --limit 10 --num-samples 5
 ```
 
@@ -98,8 +98,8 @@ python run_toxicity.py \
 
 ```bash
 python run_toxicity.py \
-    --base-url https://your-endpoint/v1 \
-    --model your-model-id \
+    --base-url https://functionary-inference-pt-br.meetkai.ai/v1 \
+    --model meetkai/functionary-pt-BR-v1.1 \
     --scorer openai \
     --limit 10 --num-samples 5
 ```
@@ -108,8 +108,8 @@ python run_toxicity.py \
 
 ```bash
 python run_toxicity.py \
-    --base-url https://your-endpoint/v1 \
-    --model your-model-id \
+    --base-url https://functionary-inference-pt-br.meetkai.ai/v1 \
+    --model meetkai/functionary-pt-BR-v1.1 \
     --scorer perspective \
     --limit 10 --num-samples 5
 ```
@@ -118,8 +118,8 @@ python run_toxicity.py \
 
 ```bash
 python run_toxicity.py \
-    --base-url https://your-endpoint/v1 \
-    --model your-model-id \
+    --base-url https://functionary-inference-pt-br.meetkai.ai/v1 \
+    --model meetkai/functionary-pt-BR-v1.1 \
     --scorer openai
 ```
 
@@ -151,7 +151,7 @@ python run_toxicity.py \
     "avg_toxicity": 0.1053
   },
   "config": {
-    "model": "your-model",
+    "model": "meetkai/functionary-pt-BR-v1.1",
     "scorer": "openai_moderation",
     "num_prompts": 99442,
     "num_samples_per_prompt": 25,

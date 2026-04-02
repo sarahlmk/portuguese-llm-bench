@@ -395,13 +395,13 @@ cd logical_reasoning && python run_eval.py
 cd mathematical_reasoning && python run_eval.py
 
 # Safety Refusals (Do-Not-Answer)
-cd safety_refusals && python run_refusals.py --base-url https://your-endpoint/v1 --model your-model-id
+cd safety_refusals && python run_refusals.py --base-url https://functionary-inference-pt-br.meetkai.ai/v1 --model meetkai/functionary-pt-BR-v1.1
 
 # Sociocultural Bias (StereoSet)
-cd sociocultural_bias && python run_stereoset.py --base-url https://your-endpoint/v1 --model your-model-id
+cd sociocultural_bias && python run_stereoset.py --base-url https://functionary-inference-pt-br.meetkai.ai/v1 --model meetkai/functionary-pt-BR-v1.1
 
 # Toxicity (RealToxicityPrompts)
-cd toxicity && python run_toxicity.py --base-url https://your-endpoint/v1 --model your-model-id
+cd toxicity && python run_toxicity.py --base-url https://functionary-inference-pt-br.meetkai.ai/v1 --model meetkai/functionary-pt-BR-v1.1
 ```
 
 ### 5. Run the automated safety test suite
